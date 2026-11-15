@@ -9,6 +9,9 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 async function main() {
+    if (!process.env.TMDB_API_KEY?.trim() || process.env.TMDB_API_KEY.trim() === 'your_tmdb_api_key_here') {
+        throw new Error('Set TMDB_API_KEY to a real TMDB API key in the service environment.');
+    }
     const server = new OMSSServer({
         name: 'CinePro',
         version: '1.0.0',
@@ -114,6 +117,8 @@ ${borderBottom}
 `);
 }
 
-main().catch(() => {
+main().catch((error: unknown) => {
+    const message = error instanceof Error ? error.message : 'Unknown startup error';
+    console.error('[startup] CinePro failed:', message.replace(/https?:\/\/[^\s]+/g, '[URL]'));
     process.exit(1);
 });
