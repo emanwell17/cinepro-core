@@ -30,12 +30,12 @@ LABEL org.opencontainers.image.title="CinePro Core" \
 LABEL org.opencontainers.image.description="CinePro Core is the central scraping and streaming engine of the CinePro ecosystem. It exposes an OMSS-compliant HTTP API for resolving movie and TV show streams from multiple providers."
 
 ARG NODE_ENV=production
-ARG PORT=3000
+
 ARG CACHE_TYPE=memory
 
 ENV NODE_ENV=${NODE_ENV}
 ENV HOST=0.0.0.0
-ENV PORT=${PORT}
+ENV PORT=3000
 ENV CACHE_TYPE=${CACHE_TYPE}
 
 COPY package*.json ./
@@ -48,6 +48,6 @@ RUN addgroup -g 1001 -S nodejs && \
 
 USER nodejs
 
-EXPOSE ${PORT}
+EXPOSE 3000
 
 CMD ["node", "dist/server.js"]
