@@ -23,7 +23,7 @@ async function main() {
 
         // Cache (memory for dev, Redis for prod)
         cache: {
-            type: (process.env.CACHE_TYPE as 'memory' | 'redis') ?? 'memory',
+            type: (process.env.CACHE_TYPE?.trim() || 'memory') as 'memory' | 'redis',
             ttl: {
                 sources: 60 * 60,
                 subtitles: 60 * 60 * 24
